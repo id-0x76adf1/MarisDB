@@ -3,4 +3,7 @@ project(MarisDB)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MarisDB main.cpp)
+include_directories(src)
+file(GLOB STORAGE_SOURCES src/storage/*.cpp)
+
+add_executable(MarisDB ${STORAGE_SOURCES} src/main.cpp)
