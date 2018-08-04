@@ -2,14 +2,20 @@
 #define __MARISDB_PAGED_FILE_H__
 
 #include <cstdio>
+#include <string>
 
 namespace MarisDB
 {
     class PagedFile
     {
     public:
-        explicit PagedFile(std::FILE* file);
+        PagedFile(const std::string& fileName, std::FILE* file);
         ~PagedFile();
+
+        const std::string& fileName() const
+        {
+            return fileName_;
+        }
 
         FILE* rawFile() const
         {
@@ -17,6 +23,7 @@ namespace MarisDB
         }
 
     private:
+        std::string fileName_;
         FILE* file_ = nullptr;
     };
 }
