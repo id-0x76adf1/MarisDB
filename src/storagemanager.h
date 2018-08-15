@@ -5,7 +5,7 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
-#include "common/noncopyable.h"
+#include "noncopyable.h"
 
 namespace MarisDB
 {
