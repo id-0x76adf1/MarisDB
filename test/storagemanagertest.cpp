@@ -1,5 +1,6 @@
 #include <catch2/catch.hpp>
 #include <filesystem>
+#include "pagedfile.h"
 #include "storagemanager.h"
 
 using namespace MarisDB;
@@ -14,18 +15,24 @@ TEST_CASE("Create paged file", "[StorageManager]")
 {
     StorageManager manager;
     auto path = tempFilePath();
-    manager.create(path);
+    auto pagedFile = manager.create(path);
 
+    REQUIRE(pagedFile->path() == path);
     REQUIRE(fs::exists(path));
+
+    manager.close(pagedFile);
 }
 
 TEST_CASE("Open paged file", "[StorageManager]")
 {
     StorageManager manager;
     auto path = tempFilePath();
-    auto pageFile = manager.create(path);
-    manager.close(pageFile);
+    auto pagedFile = manager.create(path);
+    manager.close(pagedFile);
 
-    REQUIRE_FALSE(pageFile);
-    REQUIRE(manager.open(path));
+    auto samePagedFile = manager.open(path);
+    REQUIRE(samePagedFile->path() == path);
+    REQUIRE(samePagedFile);
+
+    manager.close(samePagedFile);
 }
