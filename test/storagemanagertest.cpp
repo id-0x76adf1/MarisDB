@@ -8,7 +8,7 @@ namespace fs = std::filesystem;
 TEST_CASE("Create paged file", "[StorageManager]")
 {
     StorageManager manager;
-    auto path = fs::temp_directory_path() / "page1";
+    auto path = fs::temp_directory_path() / std::tmpnam(nullptr);
     manager.create(path);
 
     REQUIRE(fs::exists(path));
