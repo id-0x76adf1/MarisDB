@@ -7,33 +7,33 @@
 
 namespace MarisDB
 {
-    PagedFilePtr StorageManager::create(const std::string& fileName)
+    PagedFilePtr StorageManager::create(const std::filesystem::path& path)
     {
-        assert(!fileName.empty() && "file name can not be empty string");
+        assert(!path.empty() && "file path can not be empty");
 
-        if (std::filesystem::exists(fileName))
+        if (std::filesystem::exists(path))
         {
-            throw StorageManagerError{ "create", fileName, "already exists" };
+            throw StorageManagerError{ "create", path.string(), "already exists" };
         }
 
-        FILE* f = std::fopen(fileName.c_str(), "w");
-        auto pagedFile = std::make_shared<PagedFile>(fileName, f);
-        openPagedFiles_.insert(std::make_pair(fileName, pagedFile));
+        FILE* f = std::fopen(path.string().c_str(), "w");
+        auto pagedFile = std::make_shared<PagedFile>(path, f);
+        openPagedFiles_.insert(std::make_pair(path.string(), pagedFile));
         return pagedFile;
     }
 
-    PagedFilePtr StorageManager::open(const std::string& fileName)
+    PagedFilePtr StorageManager::open(const std::filesystem::path& path)
     {
-        assert(!fileName.empty() && "file name can not be empty string");
+        assert(!path.empty() && "file path can not be empty");
 
-        if (!std::filesystem::exists(fileName))
+        if (!std::filesystem::exists(path))
         {
-            throw StorageManagerError{ "open", fileName, "does not exist" };
+            throw StorageManagerError{ "open", path.string(), "does not exist" };
         }
 
-        FILE* f = std::fopen(fileName.c_str(), "r+");
-        auto pagedFile = std::make_shared<PagedFile>(fileName, f);
-        openPagedFiles_.insert(std::make_pair(fileName, pagedFile));
+        FILE* f = std::fopen(path.string().c_str(), "r+");
+        auto pagedFile = std::make_shared<PagedFile>(path, f);
+        openPagedFiles_.insert(std::make_pair(path.string(), pagedFile));
         return pagedFile;
     }
 
@@ -41,7 +41,7 @@ namespace MarisDB
     {
         assert(pagedFile && "parameter is null pointer");
 
-        auto it = openPagedFiles_.find(pagedFile->fileName());
+        auto it = openPagedFiles_.find(pagedFile->path().string());
         if (it != openPagedFiles_.end())
         {
             openPagedFiles_.erase(it);

@@ -2,6 +2,7 @@
 #define __MARISDB_SOTRAGE_MANAGER_H__
 
 #include <exception>
+#include <filesystem>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -18,8 +19,8 @@ namespace MarisDB
         StorageManager() = default;
         ~StorageManager() = default;
 
-        PagedFilePtr create(const std::string& fileName);
-        PagedFilePtr open(const std::string& fileName);
+        PagedFilePtr create(const std::filesystem::path& path);
+        PagedFilePtr open(const std::filesystem::path& path);
         void close(const PagedFilePtr& pagedFile);
 
     private:

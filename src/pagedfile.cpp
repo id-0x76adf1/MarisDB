@@ -2,8 +2,8 @@
 
 namespace MarisDB
 {
-    PagedFile::PagedFile(const std::string& fileName, std::FILE* file)
-        : fileName_{ fileName }, file_{ file }
+    PagedFile::PagedFile(const std::filesystem::path& path, std::FILE* file)
+        : path_{ path }, file_{ file }
     {
     }
 
