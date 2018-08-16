@@ -36,3 +36,13 @@ TEST_CASE("Open paged file", "[StorageManager]")
 
     manager.close(samePagedFile);
 }
+
+TEST_CASE("Close paged file", "[StorageManager]")
+{
+    StorageManager manager;
+    auto path = tempFilePath();
+    auto pagedFile = manager.create(path);
+
+    manager.close(pagedFile);
+    REQUIRE_FALSE(pagedFile);
+}
