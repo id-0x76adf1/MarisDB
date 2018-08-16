@@ -21,7 +21,7 @@ namespace MarisDB
 
         PagedFilePtr create(const std::filesystem::path& path);
         PagedFilePtr open(const std::filesystem::path& path);
-        void close(const PagedFilePtr& pagedFile);
+        void close(PagedFilePtr& pagedFile);
 
     private:
         std::unordered_map<std::string, PagedFilePtr> openPagedFiles_;

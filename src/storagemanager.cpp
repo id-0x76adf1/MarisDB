@@ -37,7 +37,7 @@ namespace MarisDB
         return pagedFile;
     }
 
-    void StorageManager::close(const PagedFilePtr& pagedFile)
+    void StorageManager::close(PagedFilePtr& pagedFile)
     {
         assert(pagedFile && "parameter is null pointer");
 
@@ -47,6 +47,8 @@ namespace MarisDB
             openPagedFiles_.erase(it);
         }
         std::fclose(pagedFile->rawFile());
+
+        pagedFile = nullptr;
     }
 
     StorageManagerError::StorageManagerError(const std::string& op, const std::string& fileName, const std::string& message)

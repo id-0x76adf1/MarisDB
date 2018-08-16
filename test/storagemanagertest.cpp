@@ -26,5 +26,6 @@ TEST_CASE("Open paged file", "[StorageManager]")
     auto pageFile = manager.create(path);
     manager.close(pageFile);
 
+    REQUIRE_FALSE(pageFile);
     REQUIRE(manager.open(path));
 }
