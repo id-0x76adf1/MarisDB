@@ -10,14 +10,20 @@ namespace MarisDB
     class Page
     {
     public:
-        explicit Page(std::array<uint8_t, PAGE_SIZE> data);
+        Page(int32_t pageNO, std::array<uint8_t, PAGE_SIZE> data);
 
         const std::array<uint8_t, PAGE_SIZE> data() const
         {
             return data_;
         }
 
+        int32_t pageNO() const
+        {
+            return pageNO_;
+        }
+
     private:
+        int32_t pageNO_;
         std::array<uint8_t, PAGE_SIZE> data_;
     };
 }

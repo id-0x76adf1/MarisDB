@@ -2,8 +2,8 @@
 
 namespace MarisDB
 {
-    Page::Page(std::array<uint8_t, PAGE_SIZE> data)
-        : data_(std::move(data))
+    Page::Page(int32_t pageNO, std::array<uint8_t, PAGE_SIZE> data)
+        : pageNO_{pageNO}, data_{std::move(data)}
     {
     }
 }
