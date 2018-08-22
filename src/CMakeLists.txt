@@ -1,7 +1,10 @@
 project(MarisDB)
 
 set(MarisDBSources
+	marisdb.h
 	noncopyable.h
+	page.h
+	page.cpp
 	pagedfile.h
 	pagedfile.cpp
 	storagemanager.h
