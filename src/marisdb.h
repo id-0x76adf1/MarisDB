@@ -3,6 +3,7 @@
 
 namespace
 {
+    // Page size in bytes
     static constexpr int PAGE_SIZE = 4096;
 }
 

@@ -4,9 +4,13 @@
 #include <cstdio>
 #include <filesystem>
 #include <string>
+#include <unordered_map>
 
 namespace MarisDB
 {
+    class Page;
+    using PagePtr = std::shared_ptr<Page>;
+
     class PagedFile
     {
     public:
@@ -26,6 +30,7 @@ namespace MarisDB
     private:
         std::filesystem::path path_;
         FILE* file_ = nullptr;
+        std::unordered_map<int32_t, PagePtr> pages_;
     };
 }
 
