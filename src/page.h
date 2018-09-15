@@ -3,6 +3,9 @@
 
 #include <array>
 #include <cstdint>
+#include <mutex>
+#include <optional>
+#include <set>
 #include "marisdb.h"
 
 namespace MarisDB
@@ -11,6 +14,7 @@ namespace MarisDB
     {
     public:
         Page(int32_t pageNO, std::array<uint8_t, PAGE_SIZE> data);
+        virtual ~Page();
 
         const std::array<uint8_t, PAGE_SIZE> data() const
         {
@@ -25,6 +29,17 @@ namespace MarisDB
     private:
         int32_t pageNO_;
         std::array<uint8_t, PAGE_SIZE> data_;
+    };
+
+    class HeaderPage : public Page
+    {
+    public:
+        std::optional<int32_t> allocPage();
+
+    private:
+        std::mutex mutex_;
+        std::set<int32_t> freePages_;
+        std::set<int32_t> allocatedPages_;
     };
 }
 
